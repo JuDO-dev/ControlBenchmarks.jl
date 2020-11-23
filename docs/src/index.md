@@ -1,8 +1,12 @@
 # ControlBenchmarks.jl
 
-```@index
+```@meta
+CurrentModule = ControlBenchmarks
 ```
 
-```@autodocs
-Modules = [ControlBenchmarks]
+## Guide
+
+```@contents
+Pages = ["ifac.md"]
+Depth = 1
 ```

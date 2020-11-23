@@ -5,11 +5,10 @@ module ControlBenchmarks
 #
 # The individual benchmarks are exported at the top of their respective files.
 ################################################################################
-export ConstrainedSystem,
-       FloatBoundConstraint,
-       IntegerBoundConstraint,
-       AffineConstraint,
-       generateControlBenchmark
+export controlbenchmark,
+       parameterbounds,
+       listbenchmarks,
+       getbenchmark
 
 
 ################################################################################
@@ -17,15 +16,39 @@ export ConstrainedSystem,
 ################################################################################
 using ControlSystems
 using ControlSystems: AbstractSystem, nstates, ninputs
-using Printf
+using LazySets
 using LinearAlgebra
+using Printf
+using PrettyTables
+using Polyhedra
+using SparseArrays
 
 
-################################################################################
-# General utilities in this package
-################################################################################
-include( "types/constraints.jl" )
-include( "types/system.jl" )
+# Bounds for a variable/variables
+"""
+    Bound = LazySets.Interval
+
+Alias to allow easy use of a `LazySets.Interval` to represent the upper and lower bound for a single
+variable.
+"""
+const Bound = LazySets.Interval
+
+"""
+    Bounds = Vector{Bound}
+
+Alias to allows easy use of a collection of single-variable upper and lower bounds.
+"""
+const Bounds = Vector{Bound}
+
+"""
+    ControlBenchmarkProblem
+
+The abstract type that all benchmark problems must derive from.
+"""
+abstract type ControlBenchmarkProblem end
+
+include( "internals.jl" )
+include( "interface.jl" )
 
 
 ################################################################################
@@ -33,11 +56,15 @@ include( "types/system.jl" )
 ################################################################################
 
 # The IFAC benchmark systems
-include( "systems/ifac/prob9007-hydraulicPositioningSystem.jl" )
+include( "benchmarks/ifac/prob9001-binaryDistilationColumn.jl" )
+include( "benchmarks/ifac/prob9002-drumBoiler.jl" )
+include( "benchmarks/ifac/prob9006-airplaneFlutter.jl" )
+include( "benchmarks/ifac/prob9007-hydraulicPositioningSystem.jl" )
 
 # Miscellaneous benchmark systems
-include( "systems/ballOnPlate.jl" )
-include( "systems/jonesMorari.jl")
+include( "benchmarks/ballOnPlate.jl" )
+include( "benchmarks/jonesMorari.jl" )
+include( "benchmarks/massSpringChain.jl" )
 
 
 end # module
