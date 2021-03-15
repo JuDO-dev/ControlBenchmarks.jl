@@ -57,5 +57,5 @@ function controlbenchmark( ::DrumBoiler )
            0.00;
            0.00 ]
 
-    return StateSpace( A, B, C, D, 0.0 )
+    return StateSpace( A, B, C, D, Continuous() )
 end

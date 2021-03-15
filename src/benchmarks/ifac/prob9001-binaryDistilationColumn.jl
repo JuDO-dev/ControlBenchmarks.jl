@@ -104,7 +104,5 @@ function controlbenchmark( ::BinaryDistillationColumn )
     disturbanceBound = Bound( -1.0, 1.0 )
 
     # Create the constrained system
-    # Use the explicit constructor so that the sparse type of the matrices is preserved
-    # https://github.com/JuliaControl/ControlSystems.jl/issues/311
-    return StateSpace{Float64, SparseMatrixCSC{Float64}}( A, B, C, D, 0.0 ), inputBound, disturbanceBound
+    return HeteroStateSpace( A, B, C, D, Continuous() ), inputBound, disturbanceBound
 end
