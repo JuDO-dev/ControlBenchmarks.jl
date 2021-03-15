@@ -61,10 +61,12 @@ include( "benchmarks/ifac/prob9002-drumBoiler.jl" )
 include( "benchmarks/ifac/prob9006-airplaneFlutter.jl" )
 include( "benchmarks/ifac/prob9007-hydraulicPositioningSystem.jl" )
 
+# Mass-Spring systems
+include( "benchmarks/massSpringSystems/linearMassSpringDamper.jl" )
+
 # Miscellaneous benchmark systems
 include( "benchmarks/ballOnPlate.jl" )
 include( "benchmarks/jonesMorari.jl" )
-include( "benchmarks/massSpringChain.jl" )
 
 
 end # module
