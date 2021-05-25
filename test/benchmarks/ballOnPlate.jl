@@ -1,7 +1,7 @@
 using ControlBenchmarks
 using ControlSystems
 
-(sys, sBounds, inBounds) = controlbenchmark( BallOnPlate() )
+benchmarkProb = controlbenchmark( BallOnPlate() )
 
-@test ControlSystems.nstates( sys ) == 2
-@test ControlSystems.ninputs( sys ) == 1
+@test ControlSystems.nstates( benchmarkProb.sys ) == 2
+@test ControlSystems.ninputs( benchmarkProb.sys ) == 1

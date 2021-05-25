@@ -50,5 +50,7 @@ function controlbenchmark( ::JonesMorari )
     inputBounds = Bounds( [ Bound( -5.0, 5.0 );
                             Bound( -5.0, 5.0 ) ] )
 
-    return StateSpace( A, B, C, D, 0.01 ), stateBounds, inputBounds
+    return (; :sys => StateSpace( A, B, C, D, 0.01 ),
+              :stateBounds => stateBounds,
+              :inputBounds => inputBounds )
 end

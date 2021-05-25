@@ -37,6 +37,8 @@ function controlbenchmark( ::BallOnPlate )
     # Input constraints
     inputBounds = Bounds( [ Bound( -0.0524, 0.0524 ) ] )
 
-    return StateSpace( A, B, C, D, 0.01 ), stateBounds, inputBounds
+    return (; :sys => StateSpace( A, B, C, D, 0.01 ),
+              :stateBounds => stateBounds,
+              :inputBounds => inputBounds )
 
 end

@@ -107,5 +107,7 @@ function controlbenchmark( p::HydraulicPositioningSystem; ignoreBounds::Bool = f
     disturbanceBound = Bound( 0.0, 800.0 )
 
     # Create the constrained system
-    return StateSpace( A, B, C, D ), inputBound, disturbanceBound
+    return (; :sys => StateSpace( A, B, C, D ),
+              :inputBounds => inputBound,
+              :disturbanceBounds => disturbanceBound )
 end

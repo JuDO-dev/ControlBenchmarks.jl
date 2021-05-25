@@ -693,5 +693,5 @@ function controlbenchmark( ::B767FlutterCondition )
     # Feedforward term for the control inputs to the measurments
     D22 = spzeros( 2, 2 )
 
-    return HeteroStateSpace( A, B2, C1, D22, Continuous() )
+    return (; :sys => HeteroStateSpace( A, B2, C1, D22, Continuous() ) )
 end

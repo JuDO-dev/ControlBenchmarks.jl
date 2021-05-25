@@ -42,19 +42,20 @@ mutable struct LinearMassSpringDamperChain <: ControlBenchmarkProblem
             error( "m must have n values" )
         end
 
-        # Ensure no inputs are duplicated
-        inputs = reshape( inputs, : )
-        unique!( inputs )
+        # Expand ranges and ensure no inputs are duplicated
+        inArray = collect( inputs )
+        inArray = reshape( inArray, : )
+        unique!( inArray )
 
-        if size( inputs, 1 ) > n
-            error( inputs, "More inputs requested than masses" )
+        if size( inArray, 1 ) > n
+            error( inArray, "More inputs requested than masses" )
         end
 
-        if !all( inputs .<= n )
+        if !all( inArray .<= n )
             throw( DomainError( inputs, "Inputs must be on masses" ) )
         end
 
-        return new(n, k, β, m, inputs)
+        return new(n, k, β, m, inArray)
     end
 end
 
@@ -105,5 +106,5 @@ function controlbenchmark( chain::LinearMassSpringDamperChain )
     C = sparse( 1.0*I, 2*n, 2*n )
     D = spzeros( 2*n, dim )
 
-    return HeteroStateSpace( A, B, C, D, Continuous() )
+    return (; :sys => HeteroStateSpace( A, B, C, D, Continuous() ) )
 end

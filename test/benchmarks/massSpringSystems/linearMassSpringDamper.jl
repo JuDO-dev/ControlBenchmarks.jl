@@ -5,30 +5,30 @@ using SparseArrays
 
 # Test the constructor with 1 mass and all values equal to 1
 msd = LinearMassSpringDamperChain( 1, 1, 1, 1 )
-sys = controlbenchmark( msd )
+ben = controlbenchmark( msd )
 
-@test ControlSystems.nstates( sys ) == 2
-@test ControlSystems.ninputs( sys ) == 1
-@test ControlSystems.noutputs( sys ) == 2
+@test ControlSystems.nstates( ben.sys ) == 2
+@test ControlSystems.ninputs( ben.sys ) == 1
+@test ControlSystems.noutputs( ben.sys ) == 2
 
-@test issparse( sys.A )
-@test issparse( sys.B )
-@test issparse( sys.C )
-@test issparse( sys.D )
+@test issparse( ben.sys.A )
+@test issparse( ben.sys.B )
+@test issparse( ben.sys.C )
+@test issparse( ben.sys.D )
 
 
 # Test the non-damper constructor with 1 mass and all values equal to 1
-ms = LinearMassSpringChain( 1, 1, 1 )
-sys = controlbenchmark( ms )
+ms  = LinearMassSpringChain( 1, 1, 1 )
+ben = controlbenchmark( ms )
 
-@test ControlSystems.nstates( sys ) == 2
-@test ControlSystems.ninputs( sys ) == 1
-@test ControlSystems.noutputs( sys ) == 2
+@test ControlSystems.nstates( ben.sys ) == 2
+@test ControlSystems.ninputs( ben.sys ) == 1
+@test ControlSystems.noutputs( ben.sys ) == 2
 
-@test issparse( sys.A )
-@test issparse( sys.B )
-@test issparse( sys.C )
-@test issparse( sys.D )
+@test issparse( ben.sys.A )
+@test issparse( ben.sys.B )
+@test issparse( ben.sys.C )
+@test issparse( ben.sys.D )
 
 
 ######################################################
@@ -66,9 +66,10 @@ m = 1000
 k = 1000
 β = 200
 
-sys = controlbenchmark( LinearMassSpringDamperChain( 5, k, β, m ) )
+ben = controlbenchmark( LinearMassSpringDamperChain( 5, k, β, m ) )
 
-A = sys.A
+A = ben.sys.A
+B = ben.sys.B
 
 # Test values for mass 1
 @test A[6, 1] == ( -2 * k / m)
@@ -94,9 +95,9 @@ end
 @test A[10, 10] == ( -2 * β / m)
 
 # There should be only 2 inputs
-@test nnz( sys.B ) == 2
-@test sys.B[6,  1] == ( -1 / m )
-@test sys.B[10, 2] == ( -1 / m )
+@test nnz( B ) == 2
+@test B[6,  1] == ( -1 / m )
+@test B[10, 2] == ( -1 / m )
 
 
 ######################################################
@@ -108,9 +109,10 @@ k = 1000
 β = 200
 
 # No damping and 3 inputs
-sys = controlbenchmark( LinearMassSpringDamperChain( 5, k, 0, m; inputs = [1, 3, 5] ) )
+ben = controlbenchmark( LinearMassSpringDamperChain( 5, k, 0, m; inputs = [1, 3, 5] ) )
 
-A = sys.A
+A = ben.sys.A
+B = ben.sys.B
 
 # No damping was requested
 
@@ -130,4 +132,11 @@ end
 @test A[10, 10] == 0
 
 # We should have 3 inputs now
-@test nnz( sys.B ) == 3
+@test nnz( B ) == 3
+
+
+######################################################
+# Test multiple inputs
+######################################################
+controlbenchmark( LinearMassSpringDamperChain( 5, k, 0, m; inputs = [1, 3, 5] ) )
+controlbenchmark( LinearMassSpringDamperChain( 5, k, 0, m; inputs = 1:5 ) )

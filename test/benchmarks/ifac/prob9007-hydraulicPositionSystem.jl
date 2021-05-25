@@ -2,9 +2,9 @@ using ControlBenchmarks
 using ControlSystems
 
 # Test the default constructor
-let sys = controlbenchmark( HydraulicPositioningSystem() )
-    @test ControlSystems.nstates( sys ) == 3
-    @test ControlSystems.ninputs( sys ) == 1
+let benchmarkProb = controlbenchmark( HydraulicPositioningSystem() )
+    @test ControlSystems.nstates( benchmarkProb.sys ) == 3
+    @test ControlSystems.ninputs( benchmarkProb.sys ) == 1
 end
 
 
@@ -12,9 +12,9 @@ end
 let hydPosSys = HydraulicPositioningSystem()
     hydPosSys.B = 10000
 
-    sys = controlbenchmark( hydPosSys )
-    @test ControlSystems.nstates( sys ) == 3
-    @test ControlSystems.ninputs( sys ) == 1
+    benchmarkProb = controlbenchmark( hydPosSys )
+    @test ControlSystems.nstates( benchmarkProb.sys ) == 3
+    @test ControlSystems.ninputs( benchmarkProb.sys ) == 1
 end
 
 
@@ -26,7 +26,7 @@ let hydPosSys = HydraulicPositioningSystem()
     @test_throws DomainError controlbenchmark( hydPosSys; ignoreBounds = false )
 
     # Test while ignoring the bounds
-    sys = controlbenchmark( hydPosSys; ignoreBounds = true )
-    @test ControlSystems.nstates( sys ) == 3
-    @test ControlSystems.ninputs( sys ) == 1
+    benchmarkProb = controlbenchmark( hydPosSys; ignoreBounds = true )
+    @test ControlSystems.nstates( benchmarkProb.sys ) == 3
+    @test ControlSystems.ninputs( benchmarkProb.sys ) == 1
 end

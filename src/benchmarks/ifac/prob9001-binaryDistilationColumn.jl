@@ -104,5 +104,7 @@ function controlbenchmark( ::BinaryDistillationColumn )
     disturbanceBound = Bound( -1.0, 1.0 )
 
     # Create the constrained system
-    return HeteroStateSpace( A, B, C, D, Continuous() ), inputBound, disturbanceBound
+    return (; :sys => HeteroStateSpace( A, B, C, D, Continuous() ),
+              :inputBounds => inputBound,
+              :disturbanceBounds => disturbanceBound )
 end

@@ -1,7 +1,7 @@
 using ControlBenchmarks
 using ControlSystems
 
-sys = controlbenchmark( DrumBoiler() )
+benchmarkProb = controlbenchmark( DrumBoiler() )
 
-@test ControlSystems.nstates( sys ) == 9
-@test ControlSystems.ninputs( sys ) == 3
+@test ControlSystems.nstates( benchmarkProb.sys ) == 9
+@test ControlSystems.ninputs( benchmarkProb.sys ) == 3
